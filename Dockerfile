@@ -14,15 +14,21 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Install GeckoDriver
-RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz && \
-    tar -xzf geckodriver-v0.30.0-linux64.tar.gz && \
+RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.34.0/geckodriver-v0.34.0-linux64.tar.gz && \
+    tar -xzf geckodriver-v0.34.0-linux64.tar.gz && \
     mv geckodriver /usr/local/bin/ && \
-    rm geckodriver-v0.30.0-linux64.
+    rm geckodriver-v0.34.0-linux64.tar.gz
+
+WORKDIR /app
 
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY scraper.py .
+COPY . .
 
-ENTRYPOINT [ "python", "./scraper.py" ]
+ENV MOZ_HEADLESS=1
+
+EXPOSE 5681
+
+CMD [ "python", "app.py" ]

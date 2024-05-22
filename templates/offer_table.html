@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ICA erbjudanden</title>
+
+    <style>
+        #fixed-table {
+            width: 800px;
+            height: 600px;
+            table-layout: fixed;
+            overflow: hidden;
+        }
+        #fixed-table th, #fixed-table td {
+            width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>ICA Luthagen erbjudanden (fult presenterat men fortfarande bättre än matpriskollen)</h1>
+    {{ table|safe }}
+</body>
+</html>

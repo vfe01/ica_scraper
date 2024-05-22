@@ -38,6 +38,7 @@ def get_offers(html):
         image_parent = offer.find(class_="offer-card__image-container")
 
         image_url = image_parent.find("img")["src"]
+        image_tag = f'<img src="{image_url}"  width="200" height="200">'
         """image = requests.get(image_url).content
         loaded_image = io.BytesIO(image)
         image_b64 = base64.b64encode(loaded_image.read())"""
@@ -53,19 +54,19 @@ def get_offers(html):
         full_description = ""
         for description in descriptions:
             full_description += description.text
-        offer_dict = {"title":title, "price":price_text, "description":full_description, "image_url":image_url }
+        offer_dict = {"title":title, "price":price_text, "description":full_description, "image": image_tag }
         offer_dicts.append(offer_dict)
         
     return  offer_dicts
 
-# Main function to perform web scraping
-def main():
-    url = 'https://www.ica.se/erbjudanden/ica-supermarket-luthagens-livs-1004458/'  # Replace with the target URL
+
+def scrape_ica_offers(url):
     html = get_html(url)
     if html:
         data = get_offers(html)
-        date_str = datetime.now().strftime("%Y-%m-%d-%H%M%S")
-        pd.DataFrame(data).to_csv(f"offers_{date_str}.csv")
-
-if __name__ == "__main__":
-    main()
+        return pd.DataFrame(data)
+        
+        
+def save_offers(df):
+    date_str = datetime.now().strftime("%Y-%m-%d-%H%M%S")
+    df.to_csv(f"./data/offers_{date_str}.csv")
