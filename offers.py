@@ -11,7 +11,7 @@ class Offers():
             self.scrape()
                 
     def scrape(self):
-        self.offers_data =  scrape_ica_offers(self.url)
+        self.offers_data =  scrape_ica_offers(self.url).iloc[:, 1:]
         self.offers_week = get_week_number()
 
     def get_latest(self):
